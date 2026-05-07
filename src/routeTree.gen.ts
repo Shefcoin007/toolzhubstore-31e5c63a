@@ -16,7 +16,10 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BlogIndexRouteImport } from './routes/blog/index'
+import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard/index'
 import { Route as AuthenticatedDashboardProfileRouteImport } from './routes/_authenticated/dashboard/profile'
 import { Route as AuthenticatedDashboardOrdersRouteImport } from './routes/_authenticated/dashboard/orders'
@@ -57,9 +60,24 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BlogRoute,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BlogRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthenticatedDashboardIndexRoute =
@@ -95,12 +113,15 @@ const AuthenticatedDashboardFundsRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
   '/register': typeof RegisterRoute
   '/services': typeof ServicesRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
+  '/blog/$slug': typeof BlogSlugRoute
+  '/blog/': typeof BlogIndexRoute
   '/dashboard/funds': typeof AuthenticatedDashboardFundsRoute
   '/dashboard/new-order': typeof AuthenticatedDashboardNewOrderRoute
   '/dashboard/orders': typeof AuthenticatedDashboardOrdersRoute
@@ -109,11 +130,13 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/blog': typeof BlogRoute
   '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
   '/register': typeof RegisterRoute
   '/services': typeof ServicesRoute
+  '/admin': typeof AuthenticatedAdminRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/blog': typeof BlogIndexRoute
   '/dashboard/funds': typeof AuthenticatedDashboardFundsRoute
   '/dashboard/new-order': typeof AuthenticatedDashboardNewOrderRoute
   '/dashboard/orders': typeof AuthenticatedDashboardOrdersRoute
@@ -124,12 +147,15 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteWithChildren
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
   '/register': typeof RegisterRoute
   '/services': typeof ServicesRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteWithChildren
+  '/blog/$slug': typeof BlogSlugRoute
+  '/blog/': typeof BlogIndexRoute
   '/_authenticated/dashboard/funds': typeof AuthenticatedDashboardFundsRoute
   '/_authenticated/dashboard/new-order': typeof AuthenticatedDashboardNewOrderRoute
   '/_authenticated/dashboard/orders': typeof AuthenticatedDashboardOrdersRoute
@@ -145,7 +171,10 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/register'
     | '/services'
+    | '/admin'
     | '/dashboard'
+    | '/blog/$slug'
+    | '/blog/'
     | '/dashboard/funds'
     | '/dashboard/new-order'
     | '/dashboard/orders'
@@ -154,11 +183,13 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/blog'
     | '/login'
     | '/pricing'
     | '/register'
     | '/services'
+    | '/admin'
+    | '/blog/$slug'
+    | '/blog'
     | '/dashboard/funds'
     | '/dashboard/new-order'
     | '/dashboard/orders'
@@ -173,7 +204,10 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/register'
     | '/services'
+    | '/_authenticated/admin'
     | '/_authenticated/dashboard'
+    | '/blog/$slug'
+    | '/blog/'
     | '/_authenticated/dashboard/funds'
     | '/_authenticated/dashboard/new-order'
     | '/_authenticated/dashboard/orders'
@@ -184,7 +218,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
-  BlogRoute: typeof BlogRoute
+  BlogRoute: typeof BlogRouteWithChildren
   LoginRoute: typeof LoginRoute
   PricingRoute: typeof PricingRoute
   RegisterRoute: typeof RegisterRoute
@@ -242,11 +276,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/': {
+      id: '/blog/'
+      path: '/'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof BlogRoute
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof BlogRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/dashboard/': {
@@ -310,10 +365,12 @@ const AuthenticatedDashboardRouteWithChildren =
   )
 
 interface AuthenticatedRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRouteWithChildren
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRouteWithChildren,
 }
 
@@ -321,10 +378,22 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
   AuthenticatedRouteChildren,
 )
 
+interface BlogRouteChildren {
+  BlogSlugRoute: typeof BlogSlugRoute
+  BlogIndexRoute: typeof BlogIndexRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogSlugRoute: BlogSlugRoute,
+  BlogIndexRoute: BlogIndexRoute,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
-  BlogRoute: BlogRoute,
+  BlogRoute: BlogRouteWithChildren,
   LoginRoute: LoginRoute,
   PricingRoute: PricingRoute,
   RegisterRoute: RegisterRoute,
