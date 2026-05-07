@@ -33,11 +33,15 @@ export const Route = createRootRoute({
       { title: "Shefcon — High-Performance Digital Service Platform" },
       { name: "description", content: "Shefcon delivers industrial-grade digital services with transparent pricing and a developer-first API." },
       { name: "author", content: "Shefcon" },
-      { property: "og:title", content: "Shefcon — Digital Service Platform" },
-      { property: "og:description", content: "Industrial-grade digital services with transparent pricing." },
+      { property: "og:title", content: "Shefcon — High-Performance Digital Service Platform" },
+      { property: "og:description", content: "Shefcon delivers industrial-grade digital services with transparent pricing and a developer-first API." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Shefcon — High-Performance Digital Service Platform" },
+      { name: "twitter:description", content: "Shefcon delivers industrial-grade digital services with transparent pricing and a developer-first API." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/cc25e3bb-7fea-4474-9003-b7a70e9a58d7/id-preview-9715b4a0--87844a46-cacc-4e7d-9025-a30175f0b8cb.lovable.app-1777315344227.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/cc25e3bb-7fea-4474-9003-b7a70e9a58d7/id-preview-9715b4a0--87844a46-cacc-4e7d-9025-a30175f0b8cb.lovable.app-1777315344227.png" },
     ],
     links: [
       {
