@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0a0a0f" />
+    <title>ToolzHub — Premium SMM Panel & Digital Services</title>
+    <meta name="description" content="ToolzHub delivers premium SMM services, log upgrades, and digital marketing tools for resellers and creators worldwide." />
+    <meta property="og:title" content="ToolzHub — Premium SMM Panel & Digital Services" />
+    <meta property="og:description" content="Premium SMM services, log upgrades, and reseller-friendly tools. Trusted by thousands worldwide." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/png" href="./icons/icon-192.png" />
+    <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
+    <!-- SPA fallback: when 404.html redirects us with ?/... rewrite back to a clean URL -->
+    <script>
+      (function () {
+        var l = window.location;
+        if (l.search.indexOf("?/") === 0) {
+          var decoded = l.search.slice(2).split("&").map(function (s) { return s.replace(/~and~/g, "&"); }).join("?");
+          window.history.replaceState(null, "", l.pathname.slice(0, -1) + decoded + l.hash);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
