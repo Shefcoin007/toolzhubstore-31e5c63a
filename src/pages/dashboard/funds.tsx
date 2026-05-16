@@ -10,10 +10,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { usd, fmtDate } from "@/lib/format";
 import { StatusBadge } from "@/components/StatusBadge";
 
-,
-  component: FundsPage,
-});
-
 const PRESETS = [5, 10, 25, 50, 100];
 
 const BANK = {

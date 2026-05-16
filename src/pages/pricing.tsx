@@ -4,10 +4,6 @@ import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
 import { Button } from "@/components/ui/button";
 
-,
-  component: PricingPage,
-});
-
 const tiers = [
   { name: "Starter", price: "Free", desc: "Pay-as-you-go.", popular: false, features: ["Access to all services", "Standard delivery", "Email support"] },
   { name: "Pro", price: "$9.99/mo", desc: "For active resellers.", popular: true, features: ["10% off all orders", "Priority delivery", "Live chat support", "API access"] },

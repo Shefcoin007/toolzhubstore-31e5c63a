@@ -9,10 +9,6 @@ import { StatusBadge } from "@/components/StatusBadge";
 import { Button } from "@/components/ui/button";
 import { usd, fmtDate } from "@/lib/format";
 
-,
-  component: OrdersPage,
-});
-
 const STATUSES = ["all", "pending", "in_progress", "completed", "failed", "cancelled"];
 
 export default function OrdersPage() {

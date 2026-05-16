@@ -9,10 +9,6 @@ import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { fmtDate } from "@/lib/format";
 
-,
-  component: BlogIndex,
-});
-
 const CATS = ["All", "SMM Tips", "Log Updates", "Marketing", "Tutorials"];
 
 export default function BlogIndex() {

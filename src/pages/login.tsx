@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable/index";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,14 +13,6 @@ import { Loader2 } from "lucide-react";
 
 const schema = z.object({ email: z.string().email(), password: z.string().min(6) });
 type Form = z.infer<typeof schema>;
-
-,
-  beforeLoad: async () => {
-    const { data } = await supabase.auth.getSession();
-    if (data.session) throw redirect({ to: "/dashboard" });
-  },
-  component: LoginPage,
-});
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -40,10 +31,10 @@ export default function LoginPage() {
 
   const onGoogle = async () => {
     setOauthLoading(true);
-    const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin + "/dashboard" });
-    if (result.error) { toast.error("Google sign-in failed"); setOauthLoading(false); return; }
-    if (result.redirected) return;
-    navigate("/dashboard");
+    const { error: oauthErr } = await supabase.auth.signInWithOAuth({ provider: "google", options: { redirectTo: window.location.origin + "/dashboard"  } });
+    if (oauthErr) { toast.error("Google sign-in failed"); setOauthLoading?.(false); return; }
+// browser will redirect to Google
+navigate("/dashboard");
   };
 
   return (

@@ -8,10 +8,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { usd, fmtDate } from "@/lib/format";
 
-,
-  component: ProfilePage,
-});
-
 export default function ProfilePage() {
   const { user, profile, refreshProfile } = useAuth();
   const [username, setUsername] = useState(profile?.username ?? "");

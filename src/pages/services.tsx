@@ -8,10 +8,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { usd } from "@/lib/format";
 
-,
-  component: ServicesPage,
-});
-
 export default function ServicesPage() {
   const [platform, setPlatform] = useState("All");
   const { data, isLoading } = useQuery({

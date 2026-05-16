@@ -5,8 +5,6 @@ const { data } = await supabase.from("user_roles").select("role").eq("user_id", 
     if (!data) throw redirect({ to: "/dashboard" });
   },
   component: AdminLayout,
-});
-
 const TABS = [
   { to: "/admin", label: "Overview", exact: true },
   { to: "/admin/services", label: "Services" },

@@ -13,15 +13,9 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sh
 import { usd } from "@/lib/format";
 import { z } from "zod";
 
-,
-  component: NewOrderPage,
-});
-
 const orderSchema = z.object({
   link: z.string().url("Enter a valid URL"),
   quantity: z.number().int().positive(),
-});
-
 export default function NewOrderPage() {
   const { user, profile, refreshProfile } = useAuth();
   const navigate = useNavigate();

@@ -4,10 +4,6 @@ import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
 import { Button } from "@/components/ui/button";
 
-,
-  component: Landing,
-});
-
 export default function Landing() {
   return (
     <div className="min-h-screen flex flex-col">

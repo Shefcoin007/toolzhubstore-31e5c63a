@@ -7,10 +7,6 @@ import { Footer } from "@/components/landing/Footer";
 import { Skeleton } from "@/components/ui/skeleton";
 import { fmtDate } from "@/lib/format";
 
-,
-  component: PostPage,
-});
-
 export default function PostPage() {
   const { slug } = useParams();
   const { data: post, isLoading } = useQuery({

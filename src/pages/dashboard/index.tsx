@@ -8,10 +8,6 @@ import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/StatusBadge";
 import { usd, fmtDate } from "@/lib/format";
 
-,
-  component: DashboardHome,
-});
-
 export default function DashboardHome() {
   const { user, profile } = useAuth();
 
