@@ -31,10 +31,16 @@ export default function LoginPage() {
 
   const onGoogle = async () => {
     setOauthLoading(true);
-    const { error: oauthErr } = await supabase.auth.signInWithOAuth({ provider: "google", options: { redirectTo: window.location.origin + "/dashboard"  } });
-    if (oauthErr) { toast.error("Google sign-in failed"); setOauthLoading?.(false); return; }
-// browser will redirect to Google
-navigate("/dashboard");
+    const redirectTo = window.location.origin + import.meta.env.BASE_URL.replace(/\/$/, "") + "/dashboard";
+    const { error: oauthErr } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo },
+    });
+    if (oauthErr) {
+      toast.error("Google sign-in failed");
+      setOauthLoading(false);
+    }
+    // Browser is redirecting to Google — nothing more to do.
   };
 
   return (
