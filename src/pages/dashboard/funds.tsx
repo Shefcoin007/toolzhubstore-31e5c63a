@@ -7,7 +7,7 @@ import { useAuth } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
-import { usd, fmtDate } from "@/lib/format";
+import { usd, ngn, USD_TO_NGN, fmtDate } from "@/lib/format";
 import { StatusBadge } from "@/components/StatusBadge";
 
 const PRESETS = [5, 10, 25, 50, 100];
@@ -69,6 +69,7 @@ export default function FundsPage() {
         <div>
           <div className="text-xs text-muted-foreground flex items-center gap-1.5"><Wallet className="h-3.5 w-3.5" /> Wallet balance</div>
           <div className="text-3xl font-extrabold mt-1">{usd(profile?.wallet_balance ?? 0)}</div>
+          <div className="text-sm text-muted-foreground mt-1">≈ {ngn(profile?.wallet_balance ?? 0)}</div>
         </div>
       </div>
 
@@ -81,6 +82,9 @@ export default function FundsPage() {
             ))}
           </div>
           <Input type="number" value={amount || ""} onChange={(e) => setAmount(Number(e.target.value) || 0)} placeholder="Custom amount" />
+          <div className="text-xs text-muted-foreground">
+            {usd(amount)} <span className="opacity-60">·</span> ≈ {ngn(amount)} <span className="opacity-60">(rate ₦{USD_TO_NGN.toLocaleString()}/$)</span>
+          </div>
           <Button className="w-full" onClick={requestFund} disabled={submitting || amount <= 0}>
             {submitting && <Loader2 className="h-4 w-4 animate-spin" />} Log fund request
           </Button>
@@ -120,7 +124,10 @@ export default function FundsPage() {
                 {tx.map((t: any) => (
                   <tr key={t.id} className="border-b border-border last:border-0">
                     <td className="p-4 capitalize">{t.type}</td>
-                    <td className={`p-4 font-medium ${t.amount < 0 ? "text-destructive" : "text-success"}`}>{t.amount < 0 ? "-" : "+"}{usd(Math.abs(t.amount))}</td>
+                    <td className={`p-4 font-medium ${t.amount < 0 ? "text-destructive" : "text-success"}`}>
+                      <div>{t.amount < 0 ? "-" : "+"}{usd(Math.abs(t.amount))}</div>
+                      <div className="text-xs text-muted-foreground font-normal">≈ {ngn(Math.abs(t.amount))}</div>
+                    </td>
                     <td className="p-4"><StatusBadge status={t.status} /></td>
                     <td className="p-4 text-muted-foreground">{fmtDate(t.created_at)}</td>
                   </tr>
