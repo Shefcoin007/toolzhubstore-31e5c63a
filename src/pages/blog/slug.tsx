@@ -12,7 +12,7 @@ export default function PostPage() {
   const { data: post, isLoading } = useQuery({
     queryKey: ["post", slug],
     queryFn: async () => {
-      const { data, error } = await supabase.from("blog_posts").select("*").eq("slug", slug).eq("published", true).maybeSingle();
+      const { data, error } = await supabase.from("blog_posts").select("*").eq("slug", slug ?? "").eq("published", true).maybeSingle();
       if (error) throw error;
       if (!data) throw new Error("Not found");
       return data;
