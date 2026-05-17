@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/lib/auth-context";
 import App from "./App";
+import WhatsAppFloat from "@/components/WhatsAppFloat";
 import "./styles.css";
 
 // Skip service worker registration inside the Lovable editor preview iframe
@@ -40,6 +41,7 @@ createRoot(document.getElementById("root")!).render(
         <BrowserRouter basename={basename || "/"}>
           <AuthProvider>
             <App />
+            <WhatsAppFloat />
           </AuthProvider>
           <Toaster richColors position="top-right" />
         </BrowserRouter>
