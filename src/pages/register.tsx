@@ -37,8 +37,12 @@ export default function RegisterPage() {
   };
 
   const onGoogle = async () => {
-    const { error: oauthErr } = await supabase.auth.signInWithOAuth({ provider: "google", options: { redirectTo: window.location.origin + "/dashboard"  } });
-    
+    const redirectTo = window.location.origin + import.meta.env.BASE_URL.replace(/\/$/, "") + "/dashboard";
+    const { error: oauthErr } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo },
+    });
+    if (oauthErr) toast.error("Google sign-in failed");
   };
 
   return (
